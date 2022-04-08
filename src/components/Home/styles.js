@@ -30,6 +30,8 @@ export const Movie = styled.li`
     span{
         font-size: 1.4rem;
         margin-top: 1rem;
+        margin-bottom: 1rem;
+        text-align: center;
     }
     a{
         transition: 0.3s;

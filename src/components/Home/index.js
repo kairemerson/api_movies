@@ -1,24 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container, MovieList,Movie } from "./styles";
+import { Link } from "react-router-dom";
 
 function Home(){
-    const movies = [
-        {
-            id: 1,
-            title: 'spider man',
-            image_url: 'https://image.api.playstation.com/vulcan/img/rnd/202011/0714/vuF88yWPSnDfmFJVTyNJpVwW.png'
-        },
-        {
-            id: 2,
-            title: 'batman',
-            image_url: 'https://image.api.playstation.com/vulcan/img/rnd/202011/0714/vuF88yWPSnDfmFJVTyNJpVwW.png'
-        },
-        {
-            id: 3,
-            title: 'avengers',
-            image_url: 'https://image.api.playstation.com/vulcan/img/rnd/202011/0714/vuF88yWPSnDfmFJVTyNJpVwW.png'
-        }
-    ]
+    const [movies, setMovies] = useState([])
+    const image_path = 'https://image.tmdb.org/t/p/w500'
+    
+    useEffect(()=>{
+        fetch(`https://api.themoviedb.org/3/movie/popular?api_key=81b80e6aef7f05f5e7fa29e42a150aa9&language=en-US&page=1`)
+            .then(response => response.json())
+            .then(data => setMovies(data.results))
+    },[])
+    
     return(
         <Container>
             <h1>Movies</h1>
@@ -26,9 +19,9 @@ function Home(){
                 {movies.map(movie =>{
                     return(
                     <Movie key={movie.id}>
-                        <a href="http://google.com">
-                            <img src={movie.image_url} alt={movie.title}/>
-                        </a>
+                        <Link to={`/details/${movie.id}`}>
+                            <img src={`${image_path}${movie.poster_path}`} alt={movie.title}/>
+                        </Link>
                         <span>{movie.title}</span>
                     </Movie>
                     )
